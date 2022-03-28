@@ -1,25 +1,29 @@
 module.exports = class Obstacle{
 	constructor(xpos, ypos, gap_width, play_area_top, play_area_bottom){
-		this.xpos = xpos;
-		this.ypos = ypos;
-		this.width = 25;
-		this.gap_width = gap_width;
+		this.xpos = xpos;  // x axis position
+		this.ypos = ypos;  // y position, top of gap
+		this.width = 25;   // obstacle width along x axis
+		this.gap_width = gap_width;  // width of the gap the birb can pass through
 		this.play_area_top = play_area_top;
 		this.play_area_bottom = play_area_bottom;
+
+        console.log("play area top " + play_area_top + " play area bottom " + play_area_bottom + " gap width " + gap_width + " ypos " + ypos)
 	}
 
 	draw_obstacle(context){
 		context.fillStyle = '#000000';
+
+        // draw top bar of obstacle
 		context.beginPath();
-		context.fillRect(this.xpos, this.play_area_top, this.width, this.play_area_top + this.ypos);
+		context.fillRect(this.xpos, this.play_area_top, this.width, this.ypos - this.play_area_top);
 		context.closePath();
 
 		// compute coordinates for bottom part of obstacle
-		let ytop = this.play_area_top + this.ypos + this.gap_width;
-		let height = this.play_area_bottom - ytop;
+		let ybottom = this.ypos + this.gap_width - this.play_area_top;
+		let height_bottom = this.play_area_bottom - ybottom;
 
 		context.beginPath();
-		context.fillRect(this.xpos, ytop, this.width, height);
+		context.fillRect(this.xpos, ybottom, this.width, height_bottom);
 		context.closePath();
 	}
 

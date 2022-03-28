@@ -8,7 +8,8 @@ module.exports = class Game{
         this.gravity = gravity;
         this.impulse = impulse;
         this.obstacle_speed = obstacle_speed
-        this.obstacles = this.initialize_obstacles(5, 150, play_area);
+        this.obstacles = this.initialize_obstacles(5, 150, 
+            play_area);
         this.init_game();
     }
 
@@ -16,9 +17,16 @@ module.exports = class Game{
         let obstacles = new Array()
         let xpos = 2 * width;
         for(let i = 0; i < num_obstacles; i++){
-            let width = 200;  // TODO randomize
-            let ypos = this.play_area.y + Math.random() * (this.play_area.width - width);
-            let obs = new Obstacle(xpos, ypos, width, this.play_area.y, this.play_area.y + this.play_area.width)
+            let width = 100;  // TODO randomize
+            // TODO better randomization, maybe gaussian centered on current position?
+            let ypos = this.play_area.playable_top + 
+                (Math.random() * 
+                    (this.play_area.playable_height - width));
+            let obs = new Obstacle(xpos, 
+                ypos, 
+                width, 
+                this.play_area.playable_top, 
+                this.play_area.playable_bottom)
             xpos += distance
             obstacles.push(obs)
         }
@@ -51,9 +59,15 @@ module.exports = class Game{
                 this.obstacles.splice(i,1)
                 // refill array with new obstacle
                 let xpos = this.obstacles[this.obstacles.length - 1].xpos + 150;  // TODO maybe randomize slightly
-                let width = 200;  // TODO randomize
-                let ypos = this.play_area.y + Math.random() * (this.play_area.width - width);
-                let obs = new Obstacle(xpos, ypos, width, this.play_area.y, this.play_area.y + this.play_area.width)
+                let width = 100;  // TODO randomize
+                let ypos = this.play_area.playable_top + 
+                    (Math.random() * 
+                        (this.play_area.playable_height - width));
+                let obs = new Obstacle(xpos, 
+                ypos, 
+                width, 
+                this.play_area.playable_top, 
+                this.play_area.playable_bottom)
                 this.obstacles.push(obs)
             }
             this.obstacles[i].move_obstacle(this.obstacle_speed);

@@ -19,7 +19,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   globalShortcut.register('f5', function() {
 		mainWindow.reload()

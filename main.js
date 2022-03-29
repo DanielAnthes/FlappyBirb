@@ -7,7 +7,7 @@ const globalShortcut = electron.globalShortcut
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 256,
+    width: 1024,
     height: 512,
     useContentSize: true,
     webPreferences: {

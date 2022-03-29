@@ -7,7 +7,6 @@ module.exports = class Obstacle{
 		this.play_area_top = play_area_top;
 		this.play_area_bottom = play_area_bottom;
 
-        console.log("play area top " + play_area_top + " play area bottom " + play_area_bottom + " gap width " + gap_width + " ypos " + ypos)
 	}
 
 	draw_obstacle(context){
@@ -29,9 +28,10 @@ module.exports = class Obstacle{
 
 	move_obstacle(distance){
 		this.xpos -= distance;
-	}
+    }
 
 	check_collision(birb){
+		var collision = false;
 		// check x coordinate collision
 		let birb_left = birb.x;
 		let birb_right = birb.x + birb.width;
@@ -39,18 +39,21 @@ module.exports = class Obstacle{
 		let birb_top = birb.y;
 		let birb_bottom = birb.y + birb.height;
 
-		let obs_left = this.x;
-		let obs_right = this.x + this.width;
+		let obs_left = this.xpos;
+		let obs_right = this.xpos + this.width;
 
 		// check whether x coordinates match
-		if((birb_left >= obs_left && birb_left <= obs_right) || (birb_right >= obs_left && birb_right <= obs_right)){
+		if(((birb_left >= obs_left) && (birb_left <= obs_right)) || ((birb_right >= obs_left) && (birb_right <= obs_right))){
 			// check collision with top bar
-			let bar_top = this.play_area_top;
 			let bar_bottom = this.play_area_top + this.ypos;
-			
-			let collision = false;
-			// check collision with bottom bar
+            if(birb.y < bar_bottom)
+			    collision = true;
+		    // check collision with bottom bar
+            let bar_top = this.ypos + this.gap_width;
+            if((birb.y + birb.height) > bar_top)
+                collision = true;
 		}
+        return collision
 	}
 }
 

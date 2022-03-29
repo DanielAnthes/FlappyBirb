@@ -8,7 +8,7 @@ module.exports = class Game{
         this.gravity = gravity;
         this.impulse = impulse;
         this.obstacle_speed = obstacle_speed
-        this.obstacles = this.initialize_obstacles(5, 150, 
+        this.obstacles = this.initialize_obstacles(2, 500, 
             play_area);
         this.init_game();
     }
@@ -38,9 +38,9 @@ module.exports = class Game{
 	let collision = false;
 	let birb = this.birb;
 	let play_area = this.play_area;
-	if(birb.y <= 0)
+	if(birb.y <= play_area.playable_top)
 		collision = true;
-	else if(birb.y >= this.play_area.height + this.birb.height)
+	else if(birb.y >= this.play_area.playable_bottom - this.birb.height)
 		collision = true;
 
 	// check for collision with obstacles
